@@ -16,8 +16,6 @@ const BlogPage = () => {
     }
   }, [dispatch, bloglist]);
 
-  console.log(bloglist)
-
   return (
     <Layout title='Auth Site | Blog' content='Blog page'>
       <h1 className='mb-5'>Blog</h1>
@@ -33,7 +31,7 @@ const BlogPage = () => {
                   <h2>{blog.title}</h2>
                 </Link>
                 <p>{blog.content}</p>
-                <img src={`${import.meta.env.VITE_APP_API_URL}${blog.bimage}`} alt={blog.title} />
+                <img src={`${import.meta.env.VITE_APP_API_URL}${blog.image}`} alt={blog.title} />
               </li>
             ))}
           </ul>
