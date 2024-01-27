@@ -4,9 +4,9 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 const router = express.Router();
 
 // Route to get blog list
-router.get('/apiblog/list', async (req, res) => {
+router.get('/api/blog/list', async (req, res) => {
   try {
-    const apiRes = await fetch(`${process.env.API_URL}/apiblog/list`, {
+    const apiRes = await fetch(`${process.env.API_URL}/api/blog/list`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -24,11 +24,11 @@ router.get('/apiblog/list', async (req, res) => {
 });
 
 // Route to get blog by ID
-router.get('/apiblog/blog/:id', async (req, res) => {
+router.get('/api/blog/:id', async (req, res) => {
   const blogId = req.params.id;
 
   try {
-    const apiRes = await fetch(`${process.env.API_URL}/apiblog/blog/${blogId}`, {
+    const apiRes = await fetch(`${process.env.API_URL}/api/blog/${blogId}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
