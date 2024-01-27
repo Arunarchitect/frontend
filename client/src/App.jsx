@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import HomePage from './containers/HomePage';
 import DashboardPage from './containers/DashboardPage';
 import LoginPage from './containers/LoginPage';
@@ -11,6 +11,7 @@ import {checkAuth} from './features/user'
 import BlogPage from './containers/BlogPage';
 import Payment from './containers/Payment';
 import BlogDetail from './containers/BlogDetail';
+import Pagenotfound from './containers/Pagenotfound';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const App = () => {
 	}, []);
 
 	return (
-		<Router>
+		<BrowserRouter>
 			<Routes>
 				<Route path='/' element={<HomePage />} />
 				<Route path='/dashboard' element={<DashboardPage />} />
@@ -29,8 +30,9 @@ const App = () => {
 				<Route path='/blog' element={<BlogPage />} />
 				<Route path='/:id' element={<BlogDetail />} />
 				<Route path='/payment' element={<Payment />} />
+				<Route path='/*' element={<Pagenotfound />} />
 			</Routes>
-		</Router>
+		</BrowserRouter>
 	);
 };
 

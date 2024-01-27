@@ -24,13 +24,15 @@ const BlogDetail = () => {
         <p>Loading...</p>
       ) : (
         <>
-          {blog && blog.blog && (
+          {blog && blog.blog ? (
             <>
               <h2>Blog title: {blog.blog.title}</h2>
               <h3>Subtitle: {blog.blog.subtitle}</h3>
               <img src={`${import.meta.env.VITE_APP_API_URL}${blog.blog.image}`} alt="" />
               {/* Add other details you want to display */}
             </>
+          ) : (
+            <>Page Not Found:please check the url</>
           )}
         </>
       )}
