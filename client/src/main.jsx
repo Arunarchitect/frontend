@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import HomePage from './containers/Home/HomePage.jsx';
+import SingleBlog from './containers/Blogs/SingleBlog.jsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path:'/',
         element: <HomePage />
+      },
+      {
+        path:'/blogs/:id',
+        element: <SingleBlog  />
       }
     ]
   },
