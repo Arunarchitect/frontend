@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const publicAxios = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: 'https://api.modelflick.com',
   });
 
 export default publicAxios
