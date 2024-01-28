@@ -13,6 +13,7 @@ const SingleBlog = () => {
   const { blogi } = useSelector((state) => state.blogi);
   useEffect(() => {
     dispatch(fetchBlog(id));
+    window.scrollTo(0, 0);
   }, [dispatch, id]);
   // console.log(id)
   const {
