@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startd": "NODE_ENV=development nodemon index.js",
+    "startd": "NODE_ENV=development nodemon index.js ",
     "startp": "NODE_ENV=production node index.js",
-    "pm2start": "pm2 start ecosystem.config.js --env production"
+    "pm2start": "pm2 start ecosystem.config.js --env production",
+    "db":"json-server --watch db.json  --port 5000"
   },
   "keywords": [],
   "author": "",
