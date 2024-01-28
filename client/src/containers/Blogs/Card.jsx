@@ -35,11 +35,15 @@ const Card = ({ blog }) => {
           <p className="text-gray-700 text-base">{content}</p>
           <p className="text-gray-700 text-sm py-1 italic">
             Tags:{" "}
-            {tags.map((tag, ind) => (
-              <span key={ind} className="mx-1 underline">
-                {tag}
-              </span>
-            ))}
+            {tags && Array.isArray(tags) ? (
+              tags.map((tag, ind) => (
+                <span key={ind} className="mx-1 underline">
+                  {tag.title}
+                </span>
+              ))
+            ) : (
+              <span>No tags available</span>
+            )}
           </p>
         </div>
         <div className="flex mt-3">
