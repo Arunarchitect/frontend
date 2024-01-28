@@ -1,85 +1,70 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useSelector, useDispatch} from 'react-redux';
-import { logout } from '../features/user';
-
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-
-	const dispatch = useDispatch();
-
-	const { isAuthenticated } = useSelector(state => state.user);
-
-	const authLinks = (
-		<>
-			<li className='nav-item'>
-				<NavLink className='nav-link' to='/dashboard'>
-					Dashboard
-				</NavLink>
-			</li>
-			<li className='nav-item'>
-				<a className='nav-link' href='#!' onClick={() => dispatch(logout())}>
-					Logout
-				</a>
-			</li>
-		</>
-	);
-
-	const guestLinks = (
-		<>
-			<li className='nav-item'>
-				<NavLink className='nav-link' to='/login'>
-					Login
-				</NavLink>
-			</li>
-			<li className='nav-item'>
-				<NavLink className='nav-link' to='/register'>
-					Register
-				</NavLink>
-			</li>
-		</>
-	);
-
-	return (
-		<nav className='navbar navbar-expand-lg bg-light'>
-			<div className='container-fluid'>
-				<Link className='navbar-brand' to='/'>
-					Modelfick
-				</Link>
-				<button
-					className='navbar-toggler'
-					type='button'
-					data-bs-toggle='collapse'
-					data-bs-target='#navbarNav'
-					aria-controls='navbarNav'
-					aria-expanded='false'
-					aria-label='Toggle navigation'
-				>
-					<span className='navbar-toggler-icon'></span>
-				</button>
-				<div className='collapse navbar-collapse' id='navbarNav'>
-					<ul className='navbar-nav'>
-						<li className='nav-item'>
-							<NavLink className='nav-link' to='/'>
-								Home
-							</NavLink>
-						</li>
-						<li className='nav-item'>
-							<NavLink className='nav-link' to='/blog'>
-								Blog
-							</NavLink>
-						</li>
-						<li className='nav-item'>
-							<NavLink className='nav-link' to='/payment'>
-								Donate
-							</NavLink>
-						</li>
-
-						{isAuthenticated ? authLinks : guestLinks}
-					</ul>
-				</div>
-			</div>
-		</nav>
-	);
+  return (
+    <header className="flex items-center justify-between py-4 border-b">
+      <Link to="/" className="px-2 lg:px-0 uppercase font-bold text-purple-800">
+        LOGO
+      </Link>
+      <ul className="inline-flex items-center">
+        <li className="px-2 md:px-4">
+          <Link
+            to="/"
+            className="text-purple-600 font-semibold hover:text-purple-500"
+          >
+            {" "}
+            Home{" "}
+          </Link>
+        </li>
+        <li className="px-2 md:px-4">
+          <a
+            href="#"
+            className="text-gray-500 font-semibold hover:text-purple-500"
+          >
+            {" "}
+            About{" "}
+          </a>
+        </li>
+        <li className="px-2 md:px-4">
+          <a
+            href="#"
+            className="text-gray-500 font-semibold hover:text-purple-500"
+          >
+            {" "}
+            Press{" "}
+          </a>
+        </li>
+        <li className="px-2 md:px-4">
+          <a
+            href="#"
+            className="text-gray-500 font-semibold hover:text-purple-500"
+          >
+            {" "}
+            Contact{" "}
+          </a>
+        </li>
+        <li className="px-2 md:px-4 hidden md:block">
+          <a
+            href="#"
+            className="text-gray-500 font-semibold hover:text-purple-500"
+          >
+            {" "}
+            Login{" "}
+          </a>
+        </li>
+        <li className="px-2 md:px-4 hidden md:block">
+          <a
+            href="#"
+            className="text-gray-500 font-semibold hover:text-purple-500"
+          >
+            {" "}
+            Register{" "}
+          </a>
+        </li>
+      </ul>
+    </header>
+  );
 };
 
 export default Navbar;
