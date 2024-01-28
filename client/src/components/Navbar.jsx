@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <header className="flex items-center justify-between py-4 border-b">
       <Link to="/" className="px-2 lg:px-0 uppercase font-bold text-purple-800">
-        LOGO
+        MODELFLICK
       </Link>
       <ul className="inline-flex items-center">
         <li className="px-2 md:px-4">

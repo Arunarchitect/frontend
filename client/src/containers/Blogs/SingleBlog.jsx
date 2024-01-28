@@ -4,27 +4,29 @@ import { AiOutlineArrowRight, AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBlog } from "../../features/singleblog/blogSlice";
+import PopularBlogs from "./PopularBlogs";
 
 const SingleBlog = () => {
   const { id } = useParams();
   //   console.log(id);
   const dispatch = useDispatch();
-  const { blogi } = useSelector(state => state.blogi);
+  const { blogi } = useSelector((state) => state.blogi);
   useEffect(() => {
     dispatch(fetchBlog(id));
   }, [dispatch, id]);
-  console.log(id)
-const {
+  // console.log(id)
+  const {
     title,
     image,
     category,
     author,
-    authorPic,
+    author_pic,
     published_date,
     reading_time,
     content,
     tags,
   } = blogi;
+  console.log(image);
 
   return (
     <article className="mt-8">
@@ -54,51 +56,24 @@ const {
           {/* ... Existing code ... */}
           {content}
           <br /> <br />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-            blanditiis tempora perferendis optio eveniet a fuga cum ipsam,
-            aperiam vitae quasi nisi corporis adipisci molestiae facere qui,
-            culpa distinctio quisquam voluptatum illum veniam, voluptate fugit
-            unde voluptas? Fugiat quidem maxime neque fugit ea! Rem soluta optio
-            eos vel? Perferendis maxime, iure molestias totam, autem voluptatum
-            nulla ad provident quam labore sint earum rem unde quis aspernatur
-            possimus pariatur assumenda magnam eligendi quos, consectetur facere
-            consequatur tempora aut. Architecto beatae unde repellat accusantium
-            velit optio earum pariatur porro. Impedit molestiae officia ex nemo
-            officiis aut, facilis, nesciunt recusandae repudiandae repellendus
-            corrupti sequi mollitia. Eaque corporis nisi repudiandae voluptas
-            eius soluta repellat consequatur praesentium vero, ad nulla, aliquid
-            vel illum sint facere quibusdam necessitatibus laudantium voluptate
-            architecto fuga omnis. Doloremque vero adipisci maiores,
-            consequuntur, eveniet dignissimos reiciendis ad totam nemo iste
-            tempora aliquam itaque quo beatae numquam doloribus recusandae iusto
-            modi perferendis ipsum a fugiat quam harum dicta. Et atque pariatur,
-            error quam fuga earum adipisci. Sequi quo voluptatem amet ullam
-            optio? Quam, dignissimos quidem? Culpa necessitatibus, hic a cumque,
-            molestias dicta nisi autem consequatur beatae tenetur laudantium
-            eveniet quas consequuntur, repudiandae incidunt atque amet assumenda
-            aut. Quae magnam tempore optio temporibus!
-          </p>
+          <p>This is an extra paragraph</p>
         </div>
 
         <div className="w-full lg:w-1/4 m-auto mt-12 max-w-screen-sm">
           <div className="p-4 border-t border-b md:border md:rounded">
             <div className="flex py-2">
               <img
-                src={authorPic}
+                src={author_pic}
                 className="h-10 w-10 rounded-full mr-2 object-cover"
                 alt="Author"
               />
               <div>
-                <p className="font-semibold text-gray-700 text-sm">
-                  {author}
-                </p>
+                <p className="font-semibold text-gray-700 text-sm">{author}</p>
                 <p className="font-semibold text-gray-600 text-xs"> Editor </p>
               </div>
             </div>
             <p className="text-gray-700 py-3">
-              Mike writes about technology Yourself required no at thoughts
-              delicate landlord it be. Branched dashwood do is whatever it.
+              Modelflick writes about architecture and planning
             </p>
             <button className="px-2 py-1 text-gray-100 bg-green-700 flex w-full items-center justify-center rounded">
               Follow
@@ -125,6 +100,8 @@ const {
           <AiOutlineArrowRight className="ml-2" />
         </a>
       </div>
+
+      <PopularBlogs />
     </article>
   );
 };

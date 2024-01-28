@@ -9,12 +9,13 @@ const Card = ({ blog }) => {
     image,
     category,
     author,
-    authorPic,
+    author_pic,
     published_date,
     reading_time,
     content,
     tags,
   } = blog;
+  
   return (
     <Link
       to={`/blogs/${id}`}
@@ -32,23 +33,14 @@ const Card = ({ blog }) => {
             {title}
           </div>
 
-          <p className="text-gray-700 text-base">{content}</p>
+          <p className="text-gray-700 text-base">{content.slice(0, 200)}</p>
           <p className="text-gray-700 text-sm py-1 italic">
-            Tags:{" "}
-            {tags && Array.isArray(tags) ? (
-              tags.map((tag, ind) => (
-                <span key={ind} className="mx-1 underline">
-                  {tag.title}
-                </span>
-              ))
-            ) : (
-              <span>No tags available</span>
-            )}
+            Tag:{tags}
           </p>
         </div>
         <div className="flex mt-3">
           <img
-            src={authorPic}
+            src={author_pic}
             className="h-10 w-10 rounded-full mr-2 object-cover"
             alt="Author"
           />

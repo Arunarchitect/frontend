@@ -43,7 +43,7 @@ const Postcards = () => {
                 <span>{currentPage}</span>
                 <button onClick={() => handlePageChange(currentPage+1)} className='px-2 bg-indigo-500 text-white rounded'>Next</button>
               </div>
-            </div>) : <div>No blogs found</div>
+            </div>) : <div>Blogs are over</div>
           }
 
 

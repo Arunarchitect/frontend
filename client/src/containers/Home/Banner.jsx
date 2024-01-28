@@ -10,7 +10,7 @@ const Banner = () => {
         >
           <div className="absolute left-0 bottom-0 w-full h-full z-10"
             style={{ backgroundImage: 'linear-gradient(180deg,transparent,rgba(0,0,0,.7))' }}></div>
-          <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" className="absolute left-0 top-0 w-full h-full rounded z-0 object-cover" alt="First Example" />
+          <img src="https://images.unsplash.com/photo-1451976426598-a7593bd6d0b2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="absolute left-0 top-0 w-full h-full rounded z-0 object-cover" alt="First Example" />
           <div className="p-4 absolute bottom-0 left-0 z-20">
             <span className="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2">Nutrition</span>
             <h2 className="text-4xl font-semibold text-gray-100 leading-tight">
@@ -32,7 +32,7 @@ const Banner = () => {
         >
           <div className="absolute left-0 top-0 w-full h-full z-10"
             style={{ backgroundImage: 'linear-gradient(180deg,transparent,rgba(0,0,0,.7))' }}></div>
-          <img src="https://images.unsplash.com/photo-1543362906-acfc16c67564?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1301&q=80" className="absolute left-0 top-0 w-full h-full rounded z-0 object-cover" alt="Second Example" />
+          <img src="https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D" className="absolute left-0 top-0 w-full h-full rounded z-0 object-cover" alt="Second Example" />
           <div className="p-4 absolute bottom-0 left-0 z-20">
             <span className="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2">Science</span>
             <h2 className="text-3xl font-semibold text-gray-100 leading-tight">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h2>
