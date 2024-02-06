@@ -1,19 +1,23 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { searched } from '../features/filter/filterSlice';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { searched } from "../features/filter/filterSlice";
 
 const Search = () => {
-    const dispatch = useDispatch()
-    const {search} = useSelector(state => state.filter)
-    const [input, setInput] = useState(search);
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        dispatch(searched(input))
-        console.log(dispatch(searched(input)))
-    }
+  const dispatch = useDispatch();
+  const { search } = useSelector((state) => state.filter);
+  const [input, setInput] = useState(search);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(input)
+    dispatch(searched(input));
+    console.log(dispatch(searched(input)));
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="relative flex items-center h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+    <form
+      onSubmit={handleSubmit}
+      className="relative flex items-center h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden"
+    >
       <div className="grid place-items-center h-full w-24 text-gray-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +44,7 @@ const Search = () => {
         onChange={(e) => setInput(e.target.value)}
       />
     </form>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

@@ -5,9 +5,8 @@ import Card from "./Card";
 
 const Postcards = () => {
   const dispatch = useDispatch();
-  const blogsState = useSelector((state) => state.blogs);
-  const { blogs, isLoading, isError, error } = blogsState;
-
+  const { blogs, isLoading, isError, error } = useSelector((state) => state.blogs);
+  
   const { tags, search } = useSelector((state) => state.filter);
   console.log(tags, search);
 
