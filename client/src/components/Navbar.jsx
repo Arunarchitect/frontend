@@ -34,10 +34,10 @@ const Navbar = () => {
             className="text-gray-500 font-semibold hover:text-purple-500"
           >
             {" "}
-            Press{" "}
+            Projects{" "}
           </a>
         </li>
-        <li className="px-2 md:px-4">
+        {/* <li className="px-2 md:px-4">
           <a
             href="#"
             className="text-gray-500 font-semibold hover:text-purple-500"
@@ -63,7 +63,7 @@ const Navbar = () => {
             {" "}
             Register{" "}
           </a>
-        </li>
+        </li> */}
       </ul>
     </header>
   );
