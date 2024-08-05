@@ -1,30 +1,50 @@
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import HomePage from './containers/Home/HomePage.jsx';
 import SingleBlog from './containers/Blogs/SingleBlog.jsx';
+import Usertype from './containers/Projects/UserType.jsx';
+import ClientPage from './containers/Projects/ClientPage.jsx';
+import ConsultantPage from './containers/Projects/ConsultantPage.jsx';
+import AboutPage from './containers/AboutPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
-    children : [
+    element: <App />,
+    children: [
       {
-        path:'/',
+        path: '/',
         element: <HomePage />
       },
       {
-        path:'/blogs/:id',
-        element: <SingleBlog  />
-      }
+        path: '/blogs/:id',
+        element: <SingleBlog />
+      },
+      {
+        path: '/project',
+        element: <Usertype />
+      },
+      {
+        path: '/project/client',
+        element: <ClientPage />
+      },
+      {
+        path: '/project/consultant',
+        element: <ConsultantPage />
+      },
+      {
+        path: '/about',
+        element: <AboutPage/>
+      },
     ]
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-      <RouterProvider router={router} />
-)
+  <RouterProvider router={router} />
+);

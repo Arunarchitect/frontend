@@ -20,22 +20,24 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="px-2 md:px-4">
-          <a
-            href="#"
+        <Link
+            to="/about"
             className="text-gray-500 font-semibold hover:text-purple-500"
           >
             {" "}
             About{" "}
-          </a>
+          </Link>
+        
         </li>
         <li className="px-2 md:px-4">
-          <a
-            href="#"
+        <Link
+            to="/project"
             className="text-gray-500 font-semibold hover:text-purple-500"
           >
             {" "}
             Projects{" "}
-          </a>
+          </Link>
+        
         </li>
         {/* <li className="px-2 md:px-4">
           <a
