@@ -11,6 +11,7 @@ import Usertype from './containers/Projects/UserType.jsx';
 import ClientPage from './containers/Projects/ClientPage.jsx';
 import ConsultantPage from './containers/Projects/ConsultantPage.jsx';
 import AboutPage from './containers/AboutPage.jsx';
+import ProjectDetailPage from './containers/Projects/ProjectDetailPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: '/project/consultant',
         element: <ConsultantPage />
+      },
+      {
+        path: '/project/:id',  // Add this route
+        element: <ProjectDetailPage /> // Add this element
       },
       {
         path: '/about',

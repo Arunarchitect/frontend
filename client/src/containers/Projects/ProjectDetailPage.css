@@ -1,0 +1,40 @@
+/* src/containers/Projects/ProjectDetailPage.css */
+
+.tick-animation {
+    animation: tickAppear 1s ease-in-out;
+  }
+  
+  .cross-animation {
+    animation: crossAppear 1s ease-in-out;
+  }
+  
+  @keyframes tickAppear {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes crossAppear {
+    0% {
+      opacity: 0;
+      transform: rotate(45deg) scale(0);
+    }
+    50% {
+      opacity: 0.5;
+      transform: rotate(45deg) scale(1.2);
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(45deg) scale(1);
+    }
+  }
+  

@@ -1,46 +1,61 @@
+// src/containers/Projects/Usertype.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import projects from './projects'; // Import projects data
 
 const Usertype = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [passcode, setPasscode] = useState(''); // Initialize as empty string
+  const [passcode, setPasscode] = useState('');
   const [message, setMessage] = useState('');
-  const [userType, setUserType] = useState(''); // To store which user type was selected
+  const [userType, setUserType] = useState('');
   const navigate = useNavigate();
 
   const openModal = (type) => {
-    setUserType(type); // Set the selected user type
+    setUserType(type);
     setIsModalOpen(true);
-    setPasscode(''); // Clear the passcode field when opening the modal
-    setMessage(''); // Reset the message when opening the modal
+    setPasscode('');
+    setMessage('');
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setMessage(''); // Reset the message when closing the modal
+    setMessage('');
   };
 
   const handlePasscodeChange = (e) => setPasscode(e.target.value);
 
   const handleSubmit = () => {
-    if (passcode === '1234') {
+    if (userType === 'client') {
+      handleClientPasscode();
+    } else if (userType === 'consultant') {
+      handleConsultantPasscode();
+    }
+  };
+
+  const handleClientPasscode = () => {
+    const project = projects.find(p => p.passcode === passcode);
+
+    if (project) {
       setMessage('Well done');
-      setPasscode(''); // Clear the passcode field
-      // Delay navigation until after the modal closes
+      setPasscode('');
       setTimeout(() => {
-        handleNavigation(); // Navigate to the respective page
-      }, 500); // Delay to ensure message visibility
+        navigate(`/project/${project.id}`); // Redirect to the project detail page
+      }, 500);
     } else {
       setMessage('Incorrect passcode');
     }
   };
 
-  const handleNavigation = () => {
-    closeModal(); // Close the modal before navigating
-    if (userType === 'client') {
-      navigate('/project/client'); // Navigate to /project/client
-    } else if (userType === 'consultant') {
-      navigate('/project/consultant'); // Navigate to /project/consultant
+  const handleConsultantPasscode = () => {
+    if (passcode === '1234') {
+      setMessage('Well done');
+      setPasscode('');
+      setTimeout(() => {
+        navigate('/project/consultant'); // Redirect to the Consultant page
+      }, 500);
+    } else {
+      setMessage('Incorrect passcode');
     }
   };
 
@@ -49,13 +64,13 @@ const Usertype = () => {
       <h1 className="text-2xl font-bold mb-8">Select User Type</h1>
       <div className="flex flex-col gap-4">
         <button
-          onClick={() => openModal('client')} // Open modal and set user type to client
+          onClick={() => openModal('client')}
           className="bg-blue-500 text-white text-xl py-3 px-6 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition"
         >
           Client
         </button>
         <button
-          onClick={() => openModal('consultant')} // Open modal and set user type to consultant
+          onClick={() => openModal('consultant')}
           className="bg-green-500 text-white text-xl py-3 px-6 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition"
         >
           Consultant
