@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import projects from './projects'; // Import projects data
 
 const Usertype = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [passcode, setPasscode] = useState('');
   const [message, setMessage] = useState('');
   const [userType, setUserType] = useState('');
+  const [projects, setProjects] = useState([]); // State to store fetched projects
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const openModal = (type) => {
@@ -16,6 +17,9 @@ const Usertype = () => {
     setIsModalOpen(true);
     setPasscode('');
     setMessage('');
+    if (type === 'client') {
+      fetchProjects(); // Fetch projects when opening modal for client type
+    }
   };
 
   const closeModal = () => {
@@ -33,10 +37,33 @@ const Usertype = () => {
     }
   };
 
+  const fetchProjects = async () => {
+    try {
+      setLoading(true);
+      const apiUrl = import.meta.env.VITE_APP_API_URL; // Access environment variable
+      const response = await fetch(`${apiUrl}/office/projects/`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      setProjects(data); // Store projects in state
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setMessage('Error fetching projects');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleClientPasscode = () => {
-    const project = projects.find(p => p.passcode === passcode);
+    // Convert user-entered passcode to string for comparison
+    const enteredPasscodeStr = passcode.toString();
+
+    // Find project with matching passcode
+    const project = projects.find(p => p.passcode.toString() === enteredPasscodeStr);
 
     if (project) {
+      console.log('Project found:', project); // Debug: Log found project
       setMessage('Well done');
       setPasscode('');
       setTimeout(() => {
@@ -48,7 +75,7 @@ const Usertype = () => {
   };
 
   const handleConsultantPasscode = () => {
-    if (passcode === '1234') {
+    if (passcode === '2222') {
       setMessage('Well done');
       setPasscode('');
       setTimeout(() => {
@@ -111,6 +138,9 @@ const Usertype = () => {
           </div>
         </div>
       )}
+
+      {/* Optional: Loading spinner */}
+      {loading && <p>Loading projects...</p>}
     </div>
   );
 };
