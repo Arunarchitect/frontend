@@ -16,23 +16,21 @@ const ProjectCard = ({ project }) => {
       className="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer hover:bg-gray-200 transition"
       onClick={handleClick}
     >
-      <h2 className="text-xl font-semibold truncate">{project.name}</h2>
-      <p className="text-gray-600 truncate">Building Area: {project.area} sq.ft</p>
+      {/* Display the project image */}
+      <img 
+        src={project.image} 
+        alt={project.client_name} 
+        className="w-full h-48 object-cover rounded-lg mb-2" 
+      />
+      {/* Display project details */}
+      <h2 className="text-xl font-semibold truncate">{project.client_name}</h2>
+      <p className="text-gray-600 truncate">Built-up Area: {project.builtup_area} sq.ft</p>
       <p className="text-gray-600 truncate">Location: {project.location}</p>
-      <div className="mt-2">
-        <div className="flex items-center">
-          <span className={`text-xl ${project.stages.designing ? 'text-green-600 tick-animation' : 'text-red-600 cross-animation'}`}>
-            {project.stages.designing ? '✓' : '✗'}
-          </span>
-          <span className="ml-2 text-gray-600">Designing Stage</span>
-        </div>
-        <div className="flex items-center mt-2">
-          <span className={`text-xl ${project.stages.execution ? 'text-green-600 tick-animation' : 'text-red-600 cross-animation'}`}>
-            {project.stages.execution ? '✓' : '✗'}
-          </span>
-          <span className="ml-2 text-gray-600">Execution Stage</span>
-        </div>
-      </div>
+      <p className="text-gray-600 truncate">Project Type: {project.project_type}</p>
+      <p className="text-gray-600 truncate">Project Stage: {project.project_stage}</p>
+      <p className="text-gray-600 truncate">Start Date: {project.start_date}</p>
+      <p className="text-gray-600 truncate">End Date: {project.end_date}</p>
+      <p className="text-gray-600 truncate">Description: {project.description}</p>
     </div>
   );
 };

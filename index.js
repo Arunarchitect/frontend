@@ -12,6 +12,7 @@ const logoutRoute = require('./routes/auth/logout');
 const verifyRoute = require('./routes/auth/verify');
 const getblogRoute = require('./routes/blog/getblog');
 const paymentRoute = require('./routes/payment/payment');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 app.use(cors()); // Apply CORS globally
 app.use(express.json());
@@ -25,15 +26,29 @@ app.use(getblogRoute);
 app.use(paymentRoute);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('client/dist'));
-app.get('*', (req, res) => {
-    const myPath = path.resolve(__dirname, 'client', 'dist', 'index.html');
-    console.log('__dirname', __dirname);
-    console.log('MyPath:', myPath);
-    return res.sendFile(myPath);
-});
+// Proxy setup for frontend development
+const isDevelopment = process.env.NODE_ENV === 'development';
+const frontendPort = 3000; // Port where your frontend development server runs
 
-
-
+if (isDevelopment) {
+    app.use(
+        '/',
+        createProxyMiddleware({
+            target: `http://localhost:3000`,
+            changeOrigin: true,
+            logLevel: 'debug',
+        })
+    );
+} else {
+    // Serve static files in production
+    app.use(express.static('client/dist'));
+    app.get('*', (req, res) => {
+        const myPath = path.resolve(__dirname, 'client', 'dist', 'index.html');
+        console.log('__dirname', __dirname);
+        console.log('MyPath:', myPath);
+        return res.sendFile(myPath);
+    });
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

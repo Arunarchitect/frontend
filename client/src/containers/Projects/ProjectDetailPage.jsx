@@ -1,45 +1,72 @@
-// src/containers/Projects/ProjectDetailPage.jsx
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import projects from './projects'; // Adjust the path as needed
-import './ProjectDetailPage.css'; // Import the CSS file for animations
 
 const ProjectDetailPage = () => {
-  const { id } = useParams();
-  const project = projects.find(p => p.id === parseInt(id, 10));
+  const { id } = useParams(); // Use the URL parameter name 'id'
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!project) {
-    return <div className="text-center mt-10">Project not found</div>;
-  }
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_APP_API_URL; // Access environment variable
+        console.log('API URL:', apiUrl); // Log the API URL
+        console.log('Project ID from URL:', id); // Log the project ID from URL
+        
+        const response = await fetch(`${apiUrl}/office/projects/`);
+        console.log('Response status:', response.status); // Log response status
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Fetched data:', data); // Log fetched data
+
+        // Convert id to integer for comparison
+        const projectIdInt = parseInt(id, 10);
+        console.log('Converted project ID:', projectIdInt); // Log the converted project ID
+
+        // Check if projectIdInt is a valid number
+        if (isNaN(projectIdInt)) {
+          throw new Error('Invalid project ID');
+        }
+
+        // Find the project with the matching ID
+        const foundProject = data.find(project => project.id === projectIdInt);
+        console.log('Found project:', foundProject); // Log the found project
+
+        setProject(foundProject);
+      } catch (error) {
+        console.error('Fetch error:', error); // Log the error
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProject();
+  }, [id]);
+
+  if (loading) return <p>Loading project details...</p>;
+  if (error) return <p>Error loading project details: {error}</p>;
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-6">{project.name}</h1>
-      <div className="bg-white shadow-md rounded-lg p-4 max-w-2xl w-full">
-        <h2 className="text-2xl font-semibold mb-4">Details</h2>
-        <p className="text-gray-600 mt-2">
-          <strong>Building Area:</strong> {project.area} sq.ft
-        </p>
-        <p className="text-gray-600 mt-2">
-          <strong>Location:</strong> {project.location}
-        </p>
-        <div className="mt-4">
-          <h3 className="text-xl font-semibold">Project Stages</h3>
-          <div className="flex items-center mt-2">
-            <span className={`text-2xl ${project.stages.designing ? 'text-green-600' : 'text-red-600'} ${project.stages.designing ? 'tick-animation' : 'cross-animation'}`}>
-              {project.stages.designing ? '✓' : '✗'}
-            </span>
-            <span className="ml-2 text-gray-600">Designing Stage</span>
-          </div>
-          <div className="flex items-center mt-2">
-            <span className={`text-2xl ${project.stages.execution ? 'text-green-600' : 'text-red-600'} ${project.stages.execution ? 'tick-animation' : 'cross-animation'}`}>
-              {project.stages.execution ? '✓' : '✗'}
-            </span>
-            <span className="ml-2 text-gray-600">Execution Stage</span>
-          </div>
+    <div className="container mx-auto p-4">
+      {project ? (
+        <div className="project-detail-card">
+          <h1 className="text-2xl font-bold">{project.client_name || "Unknown Client"}</h1>
+          <img src={project.image || "default-image-url"} alt={`${project.client_name || "project"}'s project`} className="w-full h-auto mt-4" />
+          <p><strong>Location:</strong> {project.location || "N/A"}</p>
+          <p><strong>Project Type:</strong> {project.project_type || "N/A"}</p>
+          <p><strong>Built-up Area:</strong> {project.builtup_area || "N/A"} sq ft</p>
+          <p><strong>Project Stage:</strong> {project.project_stage || "N/A"}</p>
+          <p><strong>Start Date:</strong> {project.start_date ? new Date(project.start_date).toLocaleDateString() : "N/A"}</p>
+          <p><strong>End Date:</strong> {project.end_date ? new Date(project.end_date).toLocaleDateString() : "N/A"}</p>
+          <p><strong>Description:</strong> {project.description || "N/A"}</p>
         </div>
-      </div>
+      ) : (
+        <p>No project details available</p>
+      )}
     </div>
   );
 };
