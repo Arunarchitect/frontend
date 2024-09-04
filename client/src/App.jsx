@@ -15,7 +15,9 @@ function App  () {
 				<main className='mt-8 min-h-screen'>
 					<Outlet/>
 				</main>
-				<footer>Footer</footer>
+				<footer className='bg-gray-800 text-white py-4 text-center'>
+					<p>&copy; {new Date().getFullYear()} Modelflick. All rights reserved.</p>
+				</footer>
 				
 			</div>
 		</Provider>
