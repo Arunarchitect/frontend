@@ -54,10 +54,7 @@ const SingleBlog = () => {
 
       <div className="flex flex-col lg:flex-row lg:space-x-12">
         <div className="px-4 lg:px-0 mt-8 text-gray-700 text-lg leading-relaxed w-full lg:w-3/4">
-          {/* ... Existing code ... */}
           {content}
-          <br /> <br />
-          <p>This is an extra paragraph</p>
         </div>
 
         <div className="w-full lg:w-1/4 m-auto mt-12 max-w-screen-sm">
@@ -83,26 +80,6 @@ const SingleBlog = () => {
           </div>
         </div>
       </div>
-
-      <div className="flex items-center justify-between mt-4 md:w-1/2">
-        <div className="flex items-center space-x-2">
-          <BiCommentDetail className="text-gray-600" />
-          <span className="text-gray-600">15 comments</span>
-        </div>
-        <div className="flex items-center space-x-2 mt-8">
-          <AiOutlineHeart className="text-red-500" />
-          <span className="text-gray-600">120 likes</span>
-        </div>
-        <a
-          href="/"
-          className="text-green-700 inline-flex items-center justify-center"
-        >
-          Back to Blogs
-          <AiOutlineArrowRight className="ml-2" />
-        </a>
-      </div>
-
-      <PopularBlogs />
     </article>
   );
 };
