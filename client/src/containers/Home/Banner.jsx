@@ -37,7 +37,7 @@ const Banner = () => {
             <span className="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2">Architecture and Planning</span>
             <h2 className="text-3xl font-semibold text-gray-100 leading-tight">Modelflick</h2>
             <div className="flex mt-3">
-              <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BODFjZTkwMjItYzRhMS00OWYxLWI3YTUtNWIzOWQ4Yjg4NGZiXkEyXkFqcGdeQXVyMTQ0ODAxNzE@._V1_UX172_CR0,0,172,256_AL_.jpg" className="h-10 w-10 rounded-full mr-2 object-cover" alt="Author" />
+              <img src="https://media.istockphoto.com/id/514324300/photo/close-up-color-pencils-isolated-on-white.webp?s=1024x1024&w=is&k=20&c=D0061ea-K-DH6SOKu0gCBt2usk5ToUVBqaEVzQQz-DY=" className="h-10 w-10 rounded-full mr-2 object-cover" alt="Author" />
               <div>
                 <p className="font-semibold text-gray-200 text-sm"> Team modelflick </p>
                 <p className="font-semibold text-gray-400 text-xs"> 15 Aug </p>
