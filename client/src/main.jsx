@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
+import './App.css'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -12,6 +13,7 @@ import ClientPage from './containers/Projects/ClientPage.jsx';
 import ConsultantPage from './containers/Projects/ConsultantPage.jsx';
 import AboutPage from './containers/AboutPage.jsx';
 import ProjectDetailPage from './containers/Projects/ProjectDetailPage.jsx';
+import ThreeD from './containers/ThreeD.jsx';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <AboutPage/>
+      },
+      {
+        path: '/threed',
+        element: <ThreeD/>
       },
     ]
   },
