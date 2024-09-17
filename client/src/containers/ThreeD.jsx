@@ -6,7 +6,7 @@ const ThreeD = () => {
   useEffect(() => {
     // Error handling and logging
     try {
-      const panorama = new PANOLENS.ImagePanorama('/roomnew.jpg'); // Use a relative path to public directory
+      const panorama = new PANOLENS.ImagePanorama('/room2.jpg'); // Use a relative path to public directory
       const imageContainer = document.querySelector('.image-container');
 
       if (!imageContainer) {
