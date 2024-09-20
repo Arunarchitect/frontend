@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import * as PANOLENS from 'panolens';
+import './ProjectDetailPage.css'
+
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -20,14 +22,12 @@ const ProjectDetailPage = () => {
         }
         const data = await response.json();
         
-        // Log the number of images
-        if (data.images) {
-          console.log(`Number of images: ${data.images.length}`);
-        } else {
-          console.log('No images available');
-        }
-
+        console.log('Fetched project data:', data);
         setProject(data);
+        
+        if (data.images && data.images.length > 0) {
+          setSelectedImage(data.images[0]);
+        }
       } catch (error) {
         console.error('Fetch error:', error);
         setError(error.message);
@@ -41,25 +41,24 @@ const ProjectDetailPage = () => {
 
   useEffect(() => {
     if (selectedImage && viewerRef.current) {
-      // Initialize the Panolens viewer
+      console.log('Initializing viewer with:', selectedImage.image);
       const panorama = new PANOLENS.ImagePanorama(selectedImage.image);
       const viewer = new PANOLENS.Viewer({
         container: viewerRef.current,
         autoRotate: true,
-        autoRotateSpeed: 0.3
+        autoRotateSpeed: 0.3,
       });
 
       viewer.add(panorama);
 
-      // Cleanup on component unmount
       return () => {
         viewer.dispose();
-        viewerRef.current.innerHTML = ''; // Clear the container
+        viewerRef.current.innerHTML = '';
       };
     }
   }, [selectedImage]);
 
-  if (loading) return <p>Loading project details...</p>;
+  if (loading) return <div className="loading-spinner"></div>; // Use the spinner here
   if (error) return <p>Error loading project details: {error}</p>;
 
   return (
@@ -73,25 +72,20 @@ const ProjectDetailPage = () => {
           <p><strong>Built-up Area:</strong> {project.builtup_area || "N/A"} sq ft</p>
           <p><strong>Project Stage:</strong> {project.project_stage || "N/A"}</p>
           <p><strong>Start Date:</strong> {project.start_date ? new Date(project.start_date).toLocaleDateString() : "N/A"}</p>
-          <p><strong>End Date:</strong> {project.end_date ? new Date(project.end_date).toLocaleDateString() : "N/A"}</p>
+
           <p><strong>Description:</strong> {project.description || "N/A"}</p>
 
-          {/* Conditionally render the Panolens viewer */}
-          {!selectedImage ? (
+          {selectedImage ? (
+            <div ref={viewerRef} className="viewer-container" style={{ width: '100%', height: '100vh' }}>
+              
+            </div>
+          ) : (
             <div className="tiles-container">
               {project.images && project.images.map((image) => (
-                <div
-                  key={image.id}
-                  className="tile"
-                  onClick={() => setSelectedImage(image)}
-                >
+                <div key={image.id} className="tile" onClick={() => setSelectedImage(image)}>
                   <img src={image.image} alt={`Thumbnail of ${image.id}`} />
                 </div>
               ))}
-            </div>
-          ) : (
-            <div ref={viewerRef} className="viewer-container" style={{ width: '100%', height: '100vh' }}>
-              <button onClick={() => setSelectedImage(null)} className="close-button">Close</button>
             </div>
           )}
         </div>

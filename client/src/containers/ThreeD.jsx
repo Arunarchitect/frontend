@@ -1,38 +1,66 @@
-import React, { useEffect } from 'react';
-import * as THREE from 'three'; // Import THREE
+import React, { useEffect, useState } from 'react';
 import * as PANOLENS from 'panolens';
 
 const ThreeD = () => {
+  const [panoramaLoaded, setPanoramaLoaded] = useState(false);
+  const [viewer, setViewer] = useState(null); // To hold the viewer instance
+
   useEffect(() => {
-    // Error handling and logging
-    try {
-      const panorama = new PANOLENS.ImagePanorama('/room2.jpg'); // Use a relative path to public directory
-      const imageContainer = document.querySelector('.image-container');
+    const fetchProject = async () => {
+      try {
+        const response = await fetch('https://api.modelflick.com/office/projects/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
 
-      if (!imageContainer) {
-        throw new Error('Image container not found');
+        // Assuming you want the images of the first project
+        if (data && data.length > 0 && data[0].images.length > 0) {
+          const imgPath = data[0].images[0].image;
+
+          // Preload the image
+          const img = new Image();
+          img.src = imgPath;
+
+          img.onload = () => {
+            const panorama = new PANOLENS.ImagePanorama(img.src);
+            const imageContainer = document.querySelector('.image-container');
+
+            if (!imageContainer) {
+              throw new Error('Image container not found');
+            }
+
+            const newViewer = new PANOLENS.Viewer({
+              container: imageContainer,
+              autoRotate: true,
+              autoRotateSpeed: 0.3,
+            });
+
+            newViewer.add(panorama);
+            setViewer(newViewer); // Save the viewer instance
+            setPanoramaLoaded(true); // Mark panorama as loaded
+          };
+        }
+      } catch (error) {
+        console.error('Error fetching project:', error);
       }
+    };
 
-      const viewer = new PANOLENS.Viewer({
-        container: imageContainer,
-        autoRotate: true,
-        autoRotateSpeed: 0.3,
-      });
+    fetchProject();
 
-      if (!viewer) {
-        throw new Error('Failed to create PANOLENS viewer');
+    // Cleanup function
+    return () => {
+      if (viewer) {
+        viewer.dispose(); // Dispose of the viewer on unmount
       }
-
-      viewer.add(panorama);
-      
-    } catch (error) {
-      console.error('Error initializing PANOLENS:', error);
-    }
-  }, []);
+    };
+  }, []); // Runs once on mount
 
   return (
     <div className="main-container">
-      <div className='image-container' style={{ width: '100%', height: '500px' }}></div>
+      <div className='image-container' style={{ width: '100%', height: '500px', position: 'relative' }}>
+        {!panoramaLoaded && <div className="loading-spinner"></div>} {/* Loading spinner */}
+      </div>
     </div>
   );
 };
