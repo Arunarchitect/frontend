@@ -71,10 +71,26 @@ const ProjectDetailPage = () => {
 
       return () => {
         viewer.dispose();
-        viewerRef.current.innerHTML = "";
+        if (viewerRef.current) {
+          viewerRef.current.innerHTML = "";
+        }
       };
     }
   }, [selectedImage]);
+
+  useEffect(() => {
+    const updateViewerSize = () => {
+      if (viewerRef.current) {
+        const aspectRatio = 0.707; // A4 aspect ratio
+        viewerRef.current.style.height = `${window.innerWidth * aspectRatio}px`;
+      }
+    };
+
+    window.addEventListener('resize', updateViewerSize);
+    updateViewerSize(); // Call it initially
+
+    return () => window.removeEventListener('resize', updateViewerSize);
+  }, []);
 
   useEffect(() => {
     if (project) {
@@ -108,8 +124,6 @@ const ProjectDetailPage = () => {
   if (loading) return <div className="loading-spinner"></div>;
   if (error) return <p>Error loading project details: {error}</p>;
 
-  const projectStage = project?.project_stage;
-
   return (
     <div className="container mx-auto p-4">
       {project ? (
@@ -125,23 +139,12 @@ const ProjectDetailPage = () => {
             <h1 className="text-2xl font-bold">
               {project.client_name || "Unknown Client"}
             </h1>
-            <p>
-              <strong>Location:</strong> {project.location || "N/A"}
-            </p>
-            <p>
-              <strong>Project Type:</strong> {project.project_type || "N/A"}
-            </p>
-            <p>
-              <strong>Built-up Area:</strong> {project.builtup_area || "N/A"} sq ft
-            </p>
-            <p>
-              <strong>Project Stage:</strong>
-            </p>
+            <p><strong>Location:</strong> {project.location || "N/A"}</p>
+            <p><strong>Project Type:</strong> {project.project_type || "N/A"}</p>
+            <p><strong>Built-up Area:</strong> {project.builtup_area || "N/A"} sq ft</p>
+            <p><strong>Project Stage:</strong></p>
             <div className="progress-container">
-              <div
-                className="progress-bar"
-                style={{ width: `${animationWidth}%` }}
-              />
+              <div className="progress-bar" style={{ width: `${animationWidth}%` }} />
               <div className="progress-labels">
                 {[1, 2, 3, 4, 5].map((stage, index) => (
                   <div key={stage} className={`circle ${activeCircles[index] ? 'active' : ''}`}>
@@ -150,22 +153,15 @@ const ProjectDetailPage = () => {
                 ))}
               </div>
             </div>
-            <p>
-              <strong>Start Date:</strong>{" "}
-              {project.start_date
-                ? new Date(project.start_date).toLocaleDateString()
-                : "N/A"}
-            </p>
-            <p>
-              <strong>Description:</strong> {project.description || "N/A"}
-            </p>
+            <p><strong>Start Date:</strong> {project.start_date ? new Date(project.start_date).toLocaleDateString() : "N/A"}</p>
+            <p><strong>Description:</strong> {project.description || "N/A"}</p>
           </div>
         </div>
       ) : (
         <p>No project details available</p>
       )}
 
-      <div ref={viewerRef} className="viewer-container" style={{ width: "100%", height: "100vh" }}>
+      <div ref={viewerRef} className="viewer-container">
         {panoramaLoading && <div className="loading-spinner"></div>}
       </div>
 
