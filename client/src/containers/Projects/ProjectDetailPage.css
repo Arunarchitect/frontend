@@ -1,3 +1,4 @@
+/* Animation for ticks and crosses */
 .tick-animation {
   animation: tickAppear 1s ease-in-out;
 }
@@ -36,6 +37,7 @@
   }
 }
 
+/* Flex container for project image and details */
 .flex-container {
   display: flex;
   flex-direction: row; /* Default: row for larger screens */
@@ -45,10 +47,6 @@
 .project-image, .project-details {
   flex: 1; /* Take up equal space */
   padding-right: 20px; /* Space between image and details */
-}
-
-.project-image {
-  padding-right: 2; /* No padding on small screens */
 }
 
 /* Media query for small screens */
@@ -63,6 +61,7 @@
   }
 }
 
+/* Viewer container for panoramic images */
 .viewer-container {
   width: 100%;
   height: calc(100vw * 0.707); /* 707/1000 to maintain A4 aspect ratio */
@@ -70,7 +69,7 @@
   overflow: hidden; /* Prevents overflow */
 }
 
-
+/* Tiles container for image thumbnails */
 .tiles-container {
   display: flex;
   justify-content: center; /* Center the thumbnails */
@@ -94,6 +93,7 @@
   cursor: pointer; /* Change cursor to pointer on hover */
 }
 
+/* Loading spinner styles */
 .loading-spinner {
   position: absolute;
   top: 50%;
@@ -112,43 +112,82 @@
   100% { transform: rotate(360deg); }
 }
 
-.progress-container {
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  position: relative;
-  height: 40px; /* Adjust height as needed */
-}
-
-.progress-bar {
-  height: 10px;
-  background-color: #1a590e; /* Background for the bar */
-  position: absolute;
-  bottom: 0; /* Align the bar to the bottom of the container */
-  transition: width 2s ease-out; /* Smooth transition for width */
-  z-index: 1;
-}
-
-.circle {
-  width: 30px; /* Circle diameter */
-  height: 30px;
-  border-radius: 50%;
-  background-color: #ccc; /* Default color for circles */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 2; /* Ensure circles are above the bar */
-  margin: 0 5px; /* Spacing between circles */
-}
-
-.circle.active {
-  background-color: #4caf50; /* Color when reached by the bar */
-  color: #fff; /* Text color for active stage */
-}
-
+/* Progress labels for project statuses */
 .progress-labels {
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+/* Animation for filling circles */
+/* Circle styles for project statuses */
+.circle {
+  width: 30px; /* Circle diameter */
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px; /* Spacing between circles */
+  color: #000; /* Number color */
+  border: 2px solid black; /* Black outline */
+  font-weight: bold; /* Bold numbers */
+  position: relative; /* Position relative to the circle */
+  z-index: 2; /* Ensure circles are above the line */
+  background-color: white; /* Default background color */
+}
+
+/* Animation for filling circles */
+@keyframes fillCircle {
+  0% {
+    background-color: white; /* Initial state */
+  }
+  100% {
+    background-color: var(--circle-color); /* Final color based on status */
+  }
+}
+
+/* Progress line styles */
+.progress-container {
+  position: relative; /* Positioning context for the line */
+}
+
+.progress-line {
+  height: 2px; /* Thickness of the line */
+  background-color: black; /* Line color */
+  width: 0; /* Start with zero width */
+  transition: width 2s ease; /* Animation duration and easing */
+  position: absolute;
+  top: 50%; /* Center the line vertically in relation to circles */
+  left: 0; /* Align to the left */
+  z-index: 1; /* Ensure line is behind circles */
+}
+
+
+.completed {
+  --circle-color: #4caf50; /* Green for completed */
+}
+
+.in-progress {
+  --circle-color: #ffeb3b; /* Yellow for in-progress */
+}
+
+.not-started {
+  --circle-color: #ff0000; /* Transparent for not started */
+}
+
+/* Animation class for circles */
+.circle.animating {
+  animation: fillCircle 0.9s forwards; /* Animation duration */
+}
+
+/* Text inside the circle */
+.circle-text {
+  position: relative; /* Position relative to the circle */
+  z-index: 1; /* Ensure it stays on top */
+}
+
+
+.line-animate {
+  width: 100%; /* Full width when animated */
 }

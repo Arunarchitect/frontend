@@ -12,8 +12,13 @@ const ProjectDetailPage = () => {
   const [panoramaLoading, setPanoramaLoading] = useState(false);
   const viewerRef = useRef(null);
   const viewerInstanceRef = useRef(null);
-  const [animationWidth, setAnimationWidth] = useState(0);
-  const [activeCircles, setActiveCircles] = useState([false, false, false, false, false]);
+  const [activeCircles, setActiveCircles] = useState([
+    "not-started",
+    "not-started",
+    "not-started",
+    "not-started",
+    "not-started",
+  ]);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -40,6 +45,52 @@ const ProjectDetailPage = () => {
     fetchProject();
   }, [id]);
 
+  useEffect(() => {
+    if (project) {
+      const statuses = [
+        project.lod100_status,
+        project.lod200_status,
+        project.lod300_status,
+        project.lod400_status,
+        project.lod500_status,
+      ];
+
+      const newActiveCircles = statuses.map((status) => {
+        if (status === "completed") return "completed"; // Green
+        if (status === "in_progress") return "in-progress"; // Yellow
+        return "not-started"; // Transparent
+      });
+
+      setActiveCircles(newActiveCircles);
+      triggerAnimation(newActiveCircles);
+    }
+  }, [project]);
+
+  const triggerAnimation = () => {
+    const animationDelays = [0, 500, 1000, 1500, 2000]; // Delays for each circle
+    
+    // Start the line animation at the same time as the first circle
+    setTimeout(() => {
+      const line = document.querySelector('.progress-line');
+      if (line) {
+        line.classList.add('line-animate'); // Trigger line animation
+      }
+    }, 0); // Start immediately
+  
+    animationDelays.forEach((delay, index) => {
+      setTimeout(() => {
+        setActiveCircles((prevCircles) => {
+          const newCircles = [...prevCircles];
+          if (index < newCircles.length) {
+            newCircles[index] += ' animating'; // Add 'animating' class for circle animation
+          }
+          return newCircles;
+        });
+      }, delay);
+    });
+  };
+  
+
   const handleImageClick = (image) => {
     setPanoramaLoading(true);
     setSelectedImage(image);
@@ -61,11 +112,11 @@ const ProjectDetailPage = () => {
       viewer.add(panorama);
       viewerInstanceRef.current = viewer;
 
-      panorama.addEventListener('enter', () => {
+      panorama.addEventListener("enter", () => {
         setPanoramaLoading(false);
       });
 
-      panorama.addEventListener('error', () => {
+      panorama.addEventListener("error", () => {
         setPanoramaLoading(false);
       });
 
@@ -77,49 +128,6 @@ const ProjectDetailPage = () => {
       };
     }
   }, [selectedImage]);
-
-  useEffect(() => {
-    const updateViewerSize = () => {
-      if (viewerRef.current) {
-        const aspectRatio = 0.707; // A4 aspect ratio
-        viewerRef.current.style.height = `${window.innerWidth * aspectRatio}px`;
-      }
-    };
-
-    window.addEventListener('resize', updateViewerSize);
-    updateViewerSize(); // Call it initially
-
-    return () => window.removeEventListener('resize', updateViewerSize);
-  }, []);
-
-  useEffect(() => {
-    if (project) {
-      const targetStage = Math.min(project.project_stage, 5);
-      const intervalTime = 20;
-      const steps = 20;
-      const increment = targetStage / steps;
-
-      let currentStep = 0;
-      const interval = setInterval(() => {
-        if (currentStep < steps) {
-          const currentStage = Math.floor(currentStep * (targetStage / steps));
-          setAnimationWidth(((currentStep + 1) * increment) * 20);
-          setActiveCircles((prev) => {
-            const newActive = [...prev];
-            for (let i = 0; i <= currentStage; i++) {
-              newActive[i] = true;
-            }
-            return newActive;
-          });
-          currentStep++;
-        } else {
-          clearInterval(interval);
-        }
-      }, intervalTime);
-
-      return () => clearInterval(interval);
-    }
-  }, [project]);
 
   if (loading) return <div className="loading-spinner"></div>;
   if (error) return <p>Error loading project details: {error}</p>;
@@ -144,14 +152,17 @@ const ProjectDetailPage = () => {
             <p><strong>Built-up Area:</strong> {project.builtup_area || "N/A"} sq ft</p>
             <p><strong>Project Stage:</strong></p>
             <div className="progress-container">
-              <div className="progress-bar" style={{ width: `${animationWidth}%` }} />
               <div className="progress-labels">
-                {[1, 2, 3, 4, 5].map((stage, index) => (
-                  <div key={stage} className={`circle ${activeCircles[index] ? 'active' : ''}`}>
-                    {stage}
+                {activeCircles.map((status, index) => (
+                  <div
+                    key={index}
+                    className={`circle ${status} ${activeCircles[index].includes("animating") ? "animating" : ""}`}
+                  >
+                    <span className="circle-text">{index + 1}</span>
                   </div>
                 ))}
               </div>
+              <div className="progress-line"></div> {/* New line for animation */}
             </div>
             <p><strong>Start Date:</strong> {project.start_date ? new Date(project.start_date).toLocaleDateString() : "N/A"}</p>
             <p><strong>Description:</strong> {project.description || "N/A"}</p>
@@ -160,21 +171,15 @@ const ProjectDetailPage = () => {
       ) : (
         <p>No project details available</p>
       )}
-
       <div ref={viewerRef} className="viewer-container">
         {panoramaLoading && <div className="loading-spinner"></div>}
       </div>
-
       {project?.images?.length > 0 && (
         <div className="tiles-container">
           {project.images.map((image) => (
             <div key={image.id} className="tile" onClick={() => handleImageClick(image)}>
               <p>{image.image_name}</p>
-              <img
-                src={image.image}
-                alt={`Thumbnail of ${image.id}`}
-                className="thumbnail"
-              />
+              <img src={image.image} alt={`Thumbnail of ${image.id}`} className="thumbnail" />
             </div>
           ))}
         </div>
