@@ -1,47 +1,152 @@
-/* src/containers/Projects/ProjectDetailPage.css */
-
 .tick-animation {
-    animation: tickAppear 1s ease-in-out;
-  }
-  
-  .cross-animation {
-    animation: crossAppear 1s ease-in-out;
-  }
-  
-  @keyframes tickAppear {
-    0% {
-      opacity: 0;
-      transform: scale(0);
-    }
-    50% {
-      opacity: 0.5;
-      transform: scale(1.2);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  @keyframes crossAppear {
-    0% {
-      opacity: 0;
-      transform: rotate(45deg) scale(0);
-    }
-    50% {
-      opacity: 0.5;
-      transform: rotate(45deg) scale(1.2);
-    }
-    100% {
-      opacity: 1;
-      transform: rotate(45deg) scale(1);
-    }
-  }
-  
-  .viewer-container {
-    width: 100%;
-    height: 100vh; /* or any appropriate value */
-  }
-  
+  animation: tickAppear 1s ease-in-out;
+}
 
-  
+.cross-animation {
+  animation: crossAppear 1s ease-in-out;
+}
+
+@keyframes tickAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes crossAppear {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) scale(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: rotate(45deg) scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row; /* Default: row for larger screens */
+  margin-bottom: 20px; /* Space between this section and the viewer */
+}
+
+.project-image, .project-details {
+  flex: 1; /* Take up equal space */
+  padding-right: 20px; /* Space between image and details */
+}
+
+.project-image {
+  padding-right: 2; /* No padding on small screens */
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column; /* Stack image and details vertically */
+  }
+
+  .project-image, .project-details {
+    padding-right: 0; /* Remove right padding */
+    width: 100%; /* Full width on small screens */
+  }
+}
+
+.viewer-container {
+  width: 100%;
+  height: 100vh; /* or any appropriate value */
+  position: relative; /* Required for absolute positioning of spinner */
+}
+
+.tiles-container {
+  display: flex;
+  justify-content: center; /* Center the thumbnails */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  margin-bottom: 20px; /* Space below the tiles container */
+  width: 100%; /* Ensure it takes the full width of the container */
+  text-align: center; /* Center text inside tiles */
+}
+
+.tile {
+  display: flex;
+  flex-direction: column; /* Stack the text and image */
+  align-items: center; /* Center the items */
+  margin: 0 10px; /* Space between tiles */
+  max-width: 120px; /* Optional: Limit the width of each tile */
+}
+
+.thumbnail {
+  width: 100px; /* Adjust size as needed */
+  height: auto; /* Maintain aspect ratio */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid rgba(93, 9, 197, 0.3);
+  border-top: 4px solid #50b719;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  position: relative;
+  height: 40px; /* Adjust height as needed */
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #1a590e; /* Background for the bar */
+  position: absolute;
+  bottom: 0; /* Align the bar to the bottom of the container */
+  transition: width 2s ease-out; /* Smooth transition for width */
+  z-index: 1;
+}
+
+.circle {
+  width: 30px; /* Circle diameter */
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc; /* Default color for circles */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2; /* Ensure circles are above the bar */
+  margin: 0 5px; /* Spacing between circles */
+}
+
+.circle.active {
+  background-color: #4caf50; /* Color when reached by the bar */
+  color: #fff; /* Text color for active stage */
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
