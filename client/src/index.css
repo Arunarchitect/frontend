@@ -1,3 +1,89 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  #root {
+    @apply max-w-[1280px] mx-auto p-8 text-center;
+  }
+
+  .logo {
+    @apply h-24 p-6 transition-all duration-300;
+    will-change: filter; /* Keep this as-is */
+  }
+
+  .logo:hover {
+    @apply filter drop-shadow-lg; /* Use appropriate Tailwind utility */
+  }
+
+  .logo.react:hover {
+    @apply filter drop-shadow-[0_0_2em_#61dafbaa]; /* Custom filter */
+  }
+
+  .card {
+    @apply p-8; /* Use Tailwind spacing */
+  }
+
+  .read-the-docs {
+    @apply text-gray-600; /* Tailwind gray color */
+  }
+
+  .main-container {
+    @apply flex h-screen items-center bg-black; /* Tailwind utilities */
+  }
+
+  .main-container .image-container {
+    @apply flex-1 bg-[rgb(10,1,29)]; /* Use Tailwind for background */
+  }
+
+  .main-container h1 {
+    @apply flex-1 text-center text-white uppercase text-[40px] font-light; /* Adjust font sizes as needed */
+  }
+
+  .loading-spinner {
+    @apply border-8 border-transparent rounded-full w-12 h-12 absolute;
+    border-top-color: #3498db; /* Custom color */
+    animation: spin 1s linear infinite; /* Keep this for the spinner */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .input-box {
+    @apply w-[100%] rounded-md p-4 bg-grey pl-12 border border-grey focus:bg-transparent placeholder:text-black;
+  }
+
+  input:disabled,
+  input:disabled ~ .input-icon {
+    @apply opacity-50;
+  }
+
+  .input-icon {
+    @apply absolute left-4 top-1/2 -translate-y-1/2;
+  }
+}
+
+/* Keyframes need to stay outside the @layer directive */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media query for prefers-reduced-motion */
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}

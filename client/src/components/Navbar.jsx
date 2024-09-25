@@ -7,7 +7,7 @@ const Navbar = () => {
   const menuRef = useRef(null);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(prevState => !prevState);
   };
 
   const handleClickOutside = (event) => {
@@ -23,8 +23,12 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleLinkClick = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <header className="flex items-center justify-between py-4 border-b">
+    <header className="flex items-center justify-between py-4 border-b bg-white z-20 relative">
       <Link to="/" className="px-2 lg:px-0 uppercase font-bold text-purple-800">
         MODELFLICK
       </Link>
@@ -43,42 +47,17 @@ const Navbar = () => {
 
       {/* Menu Items */}
       <ul ref={menuRef} className={`md:flex md:items-center md:static absolute bg-white w-full md:w-auto transition-all duration-300 ease-in-out ${isOpen ? "top-16" : "top-[-200px]"}`}>
-        <li className="px-2 md:px-4">
-          <Link
-            to="/"
-            className="text-purple-600 font-semibold hover:text-purple-500"
-            onClick={() => setIsOpen(false)}
-          >
-            Home
-          </Link>
-        </li>
-        <li className="px-2 md:px-4">
-          <Link
-            to="/about"
-            className="text-gray-500 font-semibold hover:text-purple-500"
-            onClick={() => setIsOpen(false)}
-          >
-            About
-          </Link>
-        </li>
-        <li className="px-2 md:px-4">
-          <Link
-            to="/threed"
-            className="text-gray-500 font-semibold hover:text-purple-500"
-            onClick={() => setIsOpen(false)}
-          >
-            3D view
-          </Link>
-        </li>
-        <li className="px-2 md:px-4">
-          <Link
-            to="/project"
-            className="text-gray-500 font-semibold hover:text-purple-500"
-            onClick={() => setIsOpen(false)}
-          >
-            Projects
-          </Link>
-        </li>
+        {["/", "/about", "/threed", "/project", "/signin", "/signup"].map((path, index) => (
+          <li key={index} className="px-2 md:px-4">
+            <Link
+              to={path}
+              className="text-gray-500 font-semibold hover:text-purple-500"
+              onClick={handleLinkClick}
+            >
+              {path === "/" ? "Home" : path.substring(1).charAt(0).toUpperCase() + path.slice(2)}
+            </Link>
+          </li>
+        ))}
       </ul>
     </header>
   );

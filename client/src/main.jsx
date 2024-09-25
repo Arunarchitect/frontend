@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
-import './App.css'
+// import './App.css';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -14,6 +14,8 @@ import ConsultantPage from './containers/Projects/ConsultantPage.jsx';
 import AboutPage from './containers/AboutPage.jsx';
 import ProjectDetailPage from './containers/Projects/ProjectDetailPage.jsx';
 import ThreeD from './containers/ThreeD.jsx';
+import UserAuthForm from './containers/User/UserAuthForm.jsx';
+import NotFound from './containers/NotFound.jsx'; // Import NotFound
 
 const router = createBrowserRouter([
   {
@@ -22,37 +24,50 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <HomePage />
+        element: <HomePage />,
       },
       {
         path: '/blogs/:id',
-        element: <SingleBlog />
+        element: <SingleBlog />,
       },
       {
         path: '/project',
-        element: <Usertype />
+        element: <Usertype />,
       },
       {
         path: '/project/client',
-        element: <ClientPage />
+        element: <ClientPage />,
       },
       {
         path: '/project/consultant',
-        element: <ConsultantPage />
+        element: <ConsultantPage />,
       },
       {
-        path: '/project/:id',  // Add this route
-        element: <ProjectDetailPage /> // Add this element
+        path: '/project/:id',
+        element: <ProjectDetailPage />,
       },
       {
         path: '/about',
-        element: <AboutPage/>
+        element: <AboutPage />,
       },
       {
         path: '/threed',
-        element: <ThreeD/>
+        element: <ThreeD />,
       },
-    ]
+      {
+        path: '/signin',
+        element: <UserAuthForm type="sign-in" />, // Corrected quotes
+      },
+      {
+        path: '/signup',
+        element: <UserAuthForm type="sign-up" />, // Corrected here
+      },
+      // Catch-all route for 404
+      {
+        path: '*',
+        element: <NotFound />, // Use the NotFound component here
+      },
+    ],
   },
 ]);
 
